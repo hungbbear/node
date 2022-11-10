@@ -149,17 +149,15 @@ class ModuleDecoder {
   void DecodeModuleHeader(base::Vector<const uint8_t> bytes, uint32_t offset);
 
   void DecodeSection(SectionCode section_code,
-                     base::Vector<const uint8_t> bytes, uint32_t offset,
-                     bool verify_functions = true);
+                     base::Vector<const uint8_t> bytes, uint32_t offset);
 
   void StartCodeSection(WireBytesRef section_bytes);
 
   bool CheckFunctionsCount(uint32_t functions_count, uint32_t error_offset);
 
-  void DecodeFunctionBody(uint32_t index, uint32_t size, uint32_t offset,
-                          bool verify_functions = true);
+  void DecodeFunctionBody(uint32_t index, uint32_t size, uint32_t offset);
 
-  ModuleResult FinishDecoding(bool verify_functions = true);
+  ModuleResult FinishDecoding();
 
   const std::shared_ptr<WasmModule>& shared_module() const;
 
