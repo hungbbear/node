@@ -1,6 +1,6 @@
 FROM alpine:3.16.2
 
-ENV NODE_VERSION 14.18.3
+ENV NODE_VERSION 16.13.0
 
 ADD ./ /tmp/node
 
