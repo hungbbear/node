@@ -1,0 +1,40 @@
+name: Crossbuild
+
+on:
+  push:
+    branches:
+      - '*386*'
+
+jobs:
+  crossbuild:
+    name: Crossbuild docker image
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Available platforms
+        run: echo ${{ steps.buildx.outputs.platforms }}
+
+      - name: Login to GitHub Docker Registry
+        run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push docker image
+        run: |
+          docker buildx build \
+            --platform linux/386 \
+            --output "type=image" \
+            --file ./Dockerfile \
+            --pull \
+            --push \
+            --tag stirenbenzen/386/node:latest \
+            --tag stirenbenzen/386/node:${GITHUB_SHA:0:7} \
+            .
