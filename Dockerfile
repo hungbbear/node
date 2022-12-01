@@ -26,7 +26,6 @@ RUN addgroup -g 1000 node \
     && apk del .build-deps-full \
     && cd .. \
     && rm -Rf /tmp/node \
-  && apk del .build-deps \
   # smoke tests
   && node --version \
   && npm --version

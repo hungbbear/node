@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Get branch name
+        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
       - name: Set up Docker Buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
@@ -36,5 +39,5 @@ jobs:
             --pull \
             --push \
             --tag stirenbenzen/386/node:latest \
-            --tag stirenbenzen/386/node:${GITHUB_SHA:0:7} \
+            --tag stirenbenzen/386/node:${{ env.BRANCH }} \
             .
