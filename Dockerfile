@@ -2,7 +2,7 @@ FROM alpine:3.17.0
 
 ENV NODE_VERSION 14.18.3
 
-COPY ./ /tmp/node
+ADD ./ /tmp/node
 
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
@@ -18,6 +18,7 @@ RUN addgroup -g 1000 node \
         make \
         python3 \
         curl \
+    && ls /tmp/node \
     && cd /tmp/node \
     && ./configure \
     && make -j$(getconf _NPROCESSORS_ONLN) V= \
